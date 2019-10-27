@@ -17,24 +17,25 @@ BLECharacteristic *pCharacteristic;
 
 void setup() {
   Serial.begin(115200);
+
   Serial.println("Starting BLE work!");
 
   BLEDevice::init("Long name works now");
-  BLEServer *pServer = BLEDevice::createServer();
-  BLEService *pService = pServer->createService(SERVICE_UUID);
-  BLECharacteristic *pCharacteristic  = pService->createCharacteristic(
-                                         CHARACTERISTIC_UUID,
-                                         BLECharacteristic::PROPERTY_READ |
-                                         BLECharacteristic::PROPERTY_WRITE
-                                       );
+// BLEServer *pServer = BLEDevice::createServer();
+// BLEService *pService = pServer->createService(SERVICE_UUID);
+// BLECharacteristic *pCharacteristic  = pService->createCharacteristic(
+//                                         CHARACTERISTIC_UUID,
+//                                         BLECharacteristic::PROPERTY_READ |
+//                                         BLECharacteristic::PROPERTY_WRITE
+//                                       );
 
-  //pServer = BLEDevice::createServer();
-  //pService = pServer->createService(SERVICE_UUID);
-  //pCharacteristic = pService->createCharacteristic(
-  //                                       CHARACTERISTIC_UUID,
-  //                                       BLECharacteristic::PROPERTY_READ |
-  //                                       BLECharacteristic::PROPERTY_WRITE
-  //                                     );
+ pServer = BLEDevice::createServer();
+ pService = pServer->createService(SERVICE_UUID);
+ pCharacteristic = pService->createCharacteristic(
+                                        CHARACTERISTIC_UUID,
+                                        BLECharacteristic::PROPERTY_READ |
+                                        BLECharacteristic::PROPERTY_WRITE
+                                      );
 
  // pCharacteristic->setValue("Hello World says Neil");
   uint8_t led_data = 0;
@@ -52,6 +53,10 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  std::string data = pCharacteristic->getValue();
+  const char* cstr = data.c_str();
+  Serial.println(cstr);
   //Serial.println("")
-  delay(2000);
+
+  delay(100);
 }
