@@ -17,6 +17,7 @@ BLECharacteristic *pCharacteristic;
 
 void setup() {
   Serial.begin(115200);
+  pinMode(2,OUTPUT);
 
   Serial.println("Starting BLE work!");
 
@@ -55,7 +56,12 @@ void loop() {
   // put your main code here, to run repeatedly:
   std::string data = pCharacteristic->getValue();
   const char* cstr = data.c_str();
-  Serial.println(cstr);
+  //Serial.println(cstr);
+  if(*cstr == 0){
+    digitalWrite(2,0);
+  }else{
+    digitalWrite(2,1);
+  }
   //Serial.println("")
 
   delay(100);
